@@ -11,6 +11,7 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.hamcrest.Matchers;
+import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
@@ -93,16 +94,23 @@ public class RestAssuredHelper {
             this.validatableResponse = validatableResponse;
         }
 
-        public void validate(int status, String message) {
+        public void validate(HttpStatus status) {
             this.validatableResponse
-                    .statusCode(status)
-                    .body("status", Matchers.equalTo(status))
-                    .body("error", Matchers.equalTo(message));
+                    .statusCode(status.value())
+                    .body("status", Matchers.equalTo(status.value()))
+                    .body("error", Matchers.equalTo(status.getReasonPhrase()));
         }
 
-        public ValidatableResponse statusCode(int statusCode) {
+        public void validate(HttpStatus status, String reason) {
+            this.validatableResponse
+                    .statusCode(status.value())
+                    .body("status", Matchers.equalTo(status.value()))
+                    .body("error", Matchers.equalTo(reason));
+        }
+
+        public ValidatableResponse statusCode(HttpStatus statusCode) {
             return this.validatableResponse
-                    .statusCode(statusCode);
+                    .statusCode(statusCode.value());
         }
 
         public ExtractableResponse<Response> extract() {

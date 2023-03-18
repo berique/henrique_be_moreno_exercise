@@ -52,4 +52,10 @@ public class MembershipsServiceImpl implements MembershipsService {
     public List<Membership> getMemberships(@NonNull UUID rid) {
         return membershipRepository.findByRoleId(rid);
     }
+
+    @Override
+    public Membership searchByUserIdTeamId(UUID userId, UUID teamId) {
+        return membershipRepository.findByUserIdAndTeamId(userId, teamId)
+                .orElseThrow(() -> new ResourceExistsException(Membership.class));
+    }
 }

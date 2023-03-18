@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
 import static java.util.Optional.ofNullable;

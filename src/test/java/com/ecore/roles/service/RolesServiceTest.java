@@ -37,7 +37,7 @@ class RolesServiceTest {
     private MembershipsService membershipsService;
 
     @Test
-    public void shouldCreateRole() {
+    void shouldCreateRole() {
         Role developerRole = DEVELOPER_ROLE();
         when(roleRepository.save(developerRole)).thenReturn(developerRole);
 
@@ -48,13 +48,13 @@ class RolesServiceTest {
     }
 
     @Test
-    public void shouldFailToCreateRoleWhenRoleIsNull() {
+    void shouldFailToCreateRoleWhenRoleIsNull() {
         assertThrows(NullPointerException.class,
                 () -> rolesService.CreateRole(null));
     }
 
     @Test
-    public void shouldReturnRoleWhenRoleIdExists() {
+    void shouldReturnRoleWhenRoleIdExists() {
         Role developerRole = DEVELOPER_ROLE();
         when(roleRepository.findById(developerRole.getId())).thenReturn(Optional.of(developerRole));
 
@@ -65,7 +65,7 @@ class RolesServiceTest {
     }
 
     @Test
-    public void shouldFailToGetRoleWhenRoleIdDoesNotExist() {
+    void shouldFailToGetRoleWhenRoleIdDoesNotExist() {
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
                 () -> rolesService.GetRole(UUID_1));
 
