@@ -3,14 +3,16 @@ package com.ecore.roles.api;
 import com.ecore.roles.model.Membership;
 import com.ecore.roles.model.Role;
 import com.ecore.roles.repository.MembershipRepository;
+import com.ecore.roles.service.RolesService;
+import com.ecore.roles.service.TeamsService;
 import com.ecore.roles.utils.RestAssuredHelper;
 import com.ecore.roles.web.dto.MembershipDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +22,9 @@ import static com.ecore.roles.utils.RestAssuredHelper.getMemberships;
 import static com.ecore.roles.utils.TestData.*;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -27,7 +32,8 @@ class MembershipsApiTests {
 
     private final MembershipRepository membershipRepository;
     private final RestTemplate restTemplate;
-
+    private final TeamsService teamsService = mock(TeamsService.class);
+    private final RolesService rolesService = mock(RolesService.class);
     private MockRestServiceServer mockServer;
 
     @LocalServerPort
@@ -128,6 +134,10 @@ class MembershipsApiTests {
     void shouldFailToAssignRoleWhenMembershipIsInvalid() {
         Membership expectedMembership = INVALID_MEMBERSHIP();
         mockGetTeamById(mockServer, expectedMembership.getTeamId(), ORDINARY_CORAL_LYNX_TEAM());
+        when(teamsService.getTeam(eq(expectedMembership.getTeamId())))
+                .thenReturn(null);
+        when(rolesService.getRole(eq(expectedMembership.getRole().getId())))
+                .thenReturn(null);
 
         createMembership(expectedMembership)
                 .validate(BAD_REQUEST,

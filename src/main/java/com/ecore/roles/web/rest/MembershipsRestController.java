@@ -6,7 +6,6 @@ import com.ecore.roles.service.RolesService;
 import com.ecore.roles.web.MembershipsApi;
 import com.ecore.roles.web.dto.MembershipDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.ecore.roles.web.dto.MembershipDto.fromModel;
-import static org.springframework.data.repository.init.ResourceReader.Type.JSON;
 import static org.springframework.http.HttpStatus.*;
 
 @RequiredArgsConstructor
@@ -36,7 +34,7 @@ public class MembershipsRestController implements MembershipsApi {
     )
     public ResponseEntity<MembershipDto> assignRoleToMembership(
             @NotNull @Valid @RequestBody MembershipDto membershipDto) {
-        if ( rolesService.GetRole(membershipDto.getRoleId()) == null ) {
+        if ( rolesService.getRole(membershipDto.getRoleId()) == null ) {
             return ResponseEntity
                     .status(NOT_FOUND)
                     .body(membershipDto);

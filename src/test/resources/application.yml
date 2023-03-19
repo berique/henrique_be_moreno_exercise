@@ -1,6 +1,6 @@
 clients:
     users-api-host: http://test.com/users
     teams-api-host: http://test.com/teams
-logging:
-  level:
-      root: DEBUG
+#logging:
+#  level:
+#      root: DEBUG

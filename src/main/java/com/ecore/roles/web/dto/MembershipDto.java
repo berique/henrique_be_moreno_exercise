@@ -2,6 +2,7 @@ package com.ecore.roles.web.dto;
 
 import com.ecore.roles.model.Membership;
 import com.ecore.roles.model.Role;
+import com.ecore.roles.web.annotation.UUIDValidator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
