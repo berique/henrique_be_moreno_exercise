@@ -45,8 +45,7 @@ public class RolesServiceImpl implements RolesService {
 
     @Override
     public Role getRole(@NonNull UUID rid) {
-        return roleRepository.findById(rid)
-                .orElseThrow(() -> new ResourceNotFoundException(Role.class, rid));
+        return roleRepository.findById(rid).orElse(null);
     }
 
     @Override

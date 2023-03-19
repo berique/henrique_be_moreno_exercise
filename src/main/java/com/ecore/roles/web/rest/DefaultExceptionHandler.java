@@ -1,6 +1,7 @@
 package com.ecore.roles.web.rest;
 
 import com.ecore.roles.exception.ErrorResponse;
+import com.ecore.roles.exception.InvalidArgumentException;
 import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,11 @@ public class DefaultExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handle(ResourceNotFoundException exception) {
         return createResponse(404, exception.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handle(InvalidArgumentException exception) {
+        return createResponse(400, exception.getMessage());
     }
 
     @ExceptionHandler
