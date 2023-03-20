@@ -36,7 +36,7 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public Role CreateRole(@NonNull Role r) {
+    public Role createRole(@NonNull Role r) {
         if (roleRepository.findByName(r.getName()).isPresent()) {
             throw new ResourceExistsException(Role.class);
         }
@@ -44,13 +44,12 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public Role GetRole(@NonNull UUID rid) {
-        return roleRepository.findById(rid)
-                .orElseThrow(() -> new ResourceNotFoundException(Role.class, rid));
+    public Role getRole(@NonNull UUID rid) {
+        return roleRepository.findById(rid).orElse(null);
     }
 
     @Override
-    public List<Role> GetRoles() {
+    public List<Role> getRoles() {
         return roleRepository.findAll();
     }
 

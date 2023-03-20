@@ -57,3 +57,14 @@ To apply the fixes for code style issues
 ```shell
 mvn spotless:apply
 ```
+
+---
+
+# Notes
+
+* The tests must be completed because the Role has an inconstant use in Membership.
+* Business rule validations should be at domains and controllers, just lightweight validations.
+* Role is uncertain at Membership because sometimes it's required in the code and sometimes not at the tests.
+* As a Software engineer
+    * Should have more atomic commits and short live pull requests.
+    * Should have talked with somebody from business (PO, APM, PM, ...)  to check the domains and discard what is necessary.
